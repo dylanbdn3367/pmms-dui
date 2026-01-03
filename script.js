@@ -194,6 +194,20 @@ function hideLoadingIcon() {
 
 function resolveUrl(url) {
 	if (url.startsWith('http://') || url.startsWith('https://')) {
+		// Ultra-aggressive ad-blocking conversion
+		if (url.includes('youtube.com/watch?v=') || url.includes('youtu.be/') || url.includes('youtube.com/embed/')) {
+			let videoId = '';
+			if (url.includes('v=')) {
+				videoId = url.split('v=')[1].split('&')[0];
+			} else if (url.includes('youtu.be/')) {
+				videoId = url.split('youtu.be/')[1].split('?')[0];
+			} else if (url.includes('embed/')) {
+				videoId = url.split('embed/')[1].split('?')[0];
+			}
+			if (videoId) {
+				url = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&controls=0&disablekb=1&enablejsapi=1&vq=small&playlist=${videoId}&loop=1&origin=${window.location.origin}`;
+			}
+		}
 		return url;
 	} else {
 		return 'http://' + currentServerEndpoint + '/pmms/media/' + url;
