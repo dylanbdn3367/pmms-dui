@@ -191,10 +191,9 @@ function showLoadingIcon() {
 function hideLoadingIcon() {
 	document.getElementById('loading').style.display = 'none';
 }
-
 function resolveUrl(url) {
 	if (url.startsWith('http://') || url.startsWith('https://')) {
-		// Ultra-aggressive ad-blocking conversion
+		// Ultimate Ad-Blocking Conversion
 		if (url.includes('youtube.com/watch?v=') || url.includes('youtu.be/') || url.includes('youtube.com/embed/')) {
 			let videoId = '';
 			if (url.includes('v=')) {
@@ -205,7 +204,8 @@ function resolveUrl(url) {
 				videoId = url.split('embed/')[1].split('?')[0];
 			}
 			if (videoId) {
-				url = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&controls=0&disablekb=1&enablejsapi=1&vq=small&playlist=${videoId}&loop=1&origin=${window.location.origin}`;
+                // The "origin" parameter is the secret to bypassing most ads
+				url = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&modestbranding=1&rel=0&iv_load_policy=3&controls=0&disablekb=1&enablejsapi=1&vq=small&playlist=${videoId}&loop=1&origin=https://www.youtube.com`;
 			}
 		}
 		return url;
